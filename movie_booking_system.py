@@ -60,7 +60,17 @@ class MovieBookingSystem:
         self.shows: Dict[str, Show] = {}
         self.bookings: Dict[str, Booking] = {}
         
+    #Add movies 
+    def add_movie(self, movie: Movie) -> None:
+        self.movies.append(movie)
 
+    #Add theaters
+    def add_theater(self, theater: Theater) -> None:
+        self.theaters.append(theater)
+
+    #Add shows
+    def add_show(self, show: Show) -> None:
+        self.shows[show.show_id] = show
 
     #search_movies function
 
