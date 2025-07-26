@@ -1,4 +1,5 @@
 #Imports
+from typing import List
 
 
 #Movie Class (title, genre, duration, rating)
@@ -10,7 +11,11 @@ class Movie:
         self.rating = rating
 
 #Theater Class (name, location)
-
+class Theater:
+    def __init__(self, name: str, location: str):
+        self.name = name
+        self.location = location
+        self.screens: List[Screen] = []
 
 #Screen Class (screen_id, theater, rows, seats_per_row)
 
