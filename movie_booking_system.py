@@ -73,7 +73,14 @@ class MovieBookingSystem:
         self.shows[show.show_id] = show
 
     #search_movies function
-
+    def search_movies(self, query: str) -> List[Movie]: 
+        results: List[Movie] = []
+        
+        for movie in self.movies:
+            if query.lower() in movie.title.lower():
+                results.append(movie)
+        
+        return results
 
     #list_showtime function
 
