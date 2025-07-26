@@ -139,7 +139,19 @@ class MovieBookingSystem:
 
 
     #cancel_bookings function
-
+    def cancel_booking(self, booking_id: str) -> bool: 
+        booking = self.bookings.get(booking_id)
+        
+        if not booking: 
+            print("Booking doesn't exist!")
+            return False
+    
+        for seat in booking.seats: 
+            booking.show.booked_seats.discard(seat)
+            
+        del self.bookings[booking_id]
+        print("Booking cancelled!")
+        return True
 
 
 #Main
