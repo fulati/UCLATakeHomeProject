@@ -1,6 +1,6 @@
 #Imports
 import uuid
-from typing import List, Set
+from typing import List, Set, Dict
 from datetime import datetime
 
 
@@ -53,6 +53,14 @@ class Booking:
         self.timeStamp = datetime.now()
 
 #MovieBookingSystem Class with (movies, theaters, shows, bookings)
+class MovieBookingSystem: 
+    def __init__(self):
+        self.movies: List[Movie] = []
+        self.theaters: List[Theater] = []
+        self.shows: Dict[str, Show] = {}
+        self.bookings: Dict[str, Booking] = {}
+        
+
 
     #search_movies function
 
