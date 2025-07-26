@@ -1,5 +1,5 @@
 #Imports
-from typing import List
+from typing import List, Set
 
 
 #Movie Class (title, genre, duration, rating)
@@ -33,7 +33,13 @@ class Screen:
             self.seats.append(row_list)
 
 #Show Class (show_id, movie, screen, time)
-
+class Show:
+    def __init__(self, show_id: str, movie: Movie, screen: Screen, time: str):
+        self.show_id = show_id
+        self.movie = movie
+        self.screen = screen
+        self.time = time
+        self.booked_seats: Set[str] = set()
 
 #Booking Class (user, show, seats)
 
