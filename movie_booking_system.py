@@ -85,6 +85,7 @@ class MovieBookingSystem:
     #list_showtime function
     def list_showtimes(self, movie_title: str) -> List[Show]:
         results: List[Show] = []
+        
         for show in self.shows.values(): 
             if show.movie.title.lower() == movie_title.lower():
                 results.append(show)
@@ -92,6 +93,49 @@ class MovieBookingSystem:
         return results
 
     #book_seats function
+    def book_seats(self, show_id: str, seats: List[str], user: str = "anonymous") -> bool: 
+        show = self.shows.get(show_id)
+
+        #Check if valid show_id
+        if not show:
+            print("Show not found.")
+            return False
+        
+        #Store all seat ID in a list
+        all_seats = []
+        for row in show.screen.seats:
+            for seat in row:
+                all_seats.append(seat)
+
+        #Store invalid seats
+        invalid = []
+        for seat in seats: 
+            if seat not in all_seats: 
+                invalid.append(seat)  
+                
+        #Check if valid seat ID
+        if invalid:
+            print("Invalid seats: " + ", ".join(invalid))
+            return False
+
+        #Store already booked seats
+        already_booked = []
+        for seat in seats:
+            if seat in show.booked_seats: 
+                already_booked.append(seat)
+                
+        #Check if seat already booked       
+        if already_booked: 
+            print("Seats already been booked: " + ", ".join(already_booked))
+            return False
+        
+        #Purchase the seats
+        for seat in seats: 
+            show.booked_seats.add(seat)
+        
+        booking = Booking(user, show, seats)
+        self.bookings[booking.booking_id] = booking
+        return True
 
 
     #cancel_bookings function
