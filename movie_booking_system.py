@@ -2,7 +2,12 @@
 
 
 #Movie Class (title, genre, duration, rating)
-
+class Movie:
+    def __init__(self, title: str, genre: str, duration: int, rating: int):
+        self.title = title
+        self.genre = genre
+        self.duration = duration
+        self.rating = rating
 
 #Theater Class (name, location)
 
