@@ -195,6 +195,7 @@ def main():
         ("AMC Marina Marketplace 6", "Marina Del Rey, CA")
     ]
     
+    show_counter = 1
     for name, location in theater_list: 
         theater = Theater(name, location)
         for i in range(3):
@@ -223,6 +224,7 @@ def main():
         print("5. Show available seats for a show")
         print("6. Book seats")
         print("7. Cancel a booking")
+        print("8. Show all bookings by user")
         print("0. Exit")
         print()
 
@@ -268,15 +270,35 @@ def main():
 
         elif choice == "6":
             print()
-            user = input("Enter your name: ")
+            user = input("Enter your name: ").strip()
+            if not user: 
+                print("Name cannot be empty.")
+                continue
             show_id = input("Enter show ID: ")
             seats = input("Enter seat IDs separated by commas (e.g. A1,A2): ").replace(" ", "").split(",")
-            system.book_seats(show_id, seats, user)
+            booked = system.book_seats(show_id, seats, user)
+            if not booked: 
+                print("Booking failed.")
 
         elif choice == "7":
             print()
             booking_id = input("Enter booking ID to cancel: ")
             system.cancel_booking(booking_id)
+            
+        elif choice == "8":
+            print()
+            name = input("Enter your name: ").strip()
+            found = False
+            for booking in system.bookings.values():
+                if booking.user.lower() == name.lower():
+                    found = True
+                    print("* Booking ID: " + booking.booking_id)
+                    print("  Show: " + booking.show.movie.title + " at " + booking.show.time)
+                    print("  Seats: " + ", ".join(booking.seats))
+                    print("  Theater: " + booking.show.screen.theater.name)
+                    print()
+            if not found: 
+                print("No bookings found for " + name + ".")
 
         elif choice == "0":
             print()
