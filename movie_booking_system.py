@@ -83,7 +83,13 @@ class MovieBookingSystem:
         return results
 
     #list_showtime function
-
+    def list_showtimes(self, movie_title: str) -> List[Show]:
+        results: List[Show] = []
+        for show in self.shows.values(): 
+            if show.movie.title.lower() == movie_title.lower():
+                results.append(show)
+        
+        return results
 
     #book_seats function
 
