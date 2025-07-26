@@ -6,11 +6,11 @@ from datetime import datetime
 
 #Movie Class (title, genre, duration, rating)
 class Movie:
-    def __init__(self, title: str, genre: str, duration: int, rating: int):
+    def __init__(self, title: str, genre: str, duration: int, rating: float):
         self.title = title
         self.genre = genre
-        self.duration = duration
-        self.rating = rating
+        self.duration = duration  # in minutes
+        self.rating = rating  # based on IMDB
 
 #Theater Class (name, location)
 class Theater:
@@ -86,4 +86,50 @@ class MovieBookingSystem:
 
 
 #Main
+def main(): 
+    system = MovieBookingSystem()
+    
+    #Adding movie
+    system.add_movie(Movie("Inception", "Sci-Fi", 148, 8.8))
+    system.add_movie(Movie("Tenet", "Sci-Fi", 150, 7.3))
+    system.add_movie(Movie("Interstellar", "Sci-Fi", 169, 8.7))
+    system.add_movie(Movie("Shutter Island", "Thriller", 138, 8.2))
+    system.add_movie(Movie("The Dark Knight", "Crime", 152, 9.1))
+    
+    #Theater and Screens
+    theater_list = [
+        ("AMC The Grove 14", "Los Angeles, CA"),
+        ("AMC The Americana at Brand 18", "Glendale, CA"), 
+        ("AMC Marina Marketplace 6", "Marina Del Rey, CA")
+    ]
+    
+    for name, location in theater_list: 
+        theater = Theater(name, location)
+        for i in range(3):
+            screen_id = name.replace(' ', '_').lower() + "_screen_" + str(i+1)
+            screen = Screen(screen_id, theater)
+            theater.screens.append(screen)
+        system.add_theater(theater)
+    
+    #Adding shows
+    system.add_show(Show("show1", system.movies[0], system.theaters[0].screens[0], "4:00 PM"))
+    system.add_show(Show("show2", system.movies[1], system.theaters[0].screens[1], "6:00 PM"))
+    system.add_show(Show("show3", system.movies[2], system.theaters[1].screens[0], "5:00 PM"))
+    system.add_show(Show("show4", system.movies[3], system.theaters[1].screens[2], "7:30 PM"))
+    system.add_show(Show("show5", system.movies[4], system.theaters[2].screens[1], "9:00 PM"))
 
+    # Print results
+    print("\n--- Movies ---")
+    for i, movie in enumerate(system.movies, 1):
+        print(str(i) + ". " + movie.title + " (" + movie.genre + ", " + str(movie.duration) + " min, Rating: " + str(movie.rating) + ")")
+    
+    print("\n--- Theaters ---")
+    for i, theater in enumerate(system.theaters, 1):
+        print(str(i) + ". " + theater.name + " located in " + theater.location)
+
+    print("\n--- Shows ---")
+    for i, show in enumerate(system.shows.values(), 1):
+        print(str(i) + ". " + show.movie.title + " - " + show.time + " in " + show.screen.screen_id + " (" + show.screen.theater.name + ")")
+
+if __name__ == "__main__":
+    main()
