@@ -88,7 +88,7 @@ class MovieBookingSystem:
             row_seats = []
             for seat in row:
                 if seat in show.booked_seats: 
-                    row_seats.append("[X]")
+                    row_seats.append("XX")
                 else: 
                     row_seats.append(seat)
             print(" ".join(row_seats))
@@ -156,6 +156,8 @@ class MovieBookingSystem:
         
         booking = Booking(user, show, seats)
         self.bookings[booking.booking_id] = booking
+        print("Successfully booked seats: " + str(seats))
+        print("Your Booking ID is: " + booking.booking_id)
         return True
 
 
@@ -208,18 +210,81 @@ def main():
     system.add_show(Show("show4", system.movies[3], system.theaters[1].screens[2], "7:30 PM"))
     system.add_show(Show("show5", system.movies[4], system.theaters[2].screens[1], "9:00 PM"))
 
-    # Print results
-    print("\n--- Movies ---")
-    for i, movie in enumerate(system.movies, 1):
-        print(str(i) + ". " + movie.title + " (" + movie.genre + ", " + str(movie.duration) + " min, Rating: " + str(movie.rating) + ")")
-    
-    print("\n--- Theaters ---")
-    for i, theater in enumerate(system.theaters, 1):
-        print(str(i) + ". " + theater.name + " located in " + theater.location)
 
-    print("\n--- Shows ---")
-    for i, show in enumerate(system.shows.values(), 1):
-        print(str(i) + ". " + show.movie.title + " - " + show.time + " in " + show.screen.screen_id + " (" + show.screen.theater.name + ")")
+    #Command Line Interface
+    print("Welcome to Movie Booking System")
+    
+    while True:
+        print("\n---------------------- OPTIONS: ----------------------")
+        print("1. View all movies")
+        print("2. Search movie")
+        print("3. View all shows")
+        print("4. View showtimes for a movie")
+        print("5. Show available seats for a show")
+        print("6. Book seats")
+        print("7. Cancel a booking")
+        print("0. Exit")
+        print()
+
+
+        choice = input("Select an option: ")
+        
+        if choice == "1":
+            print()
+            for movie in system.movies:
+                print("* " + movie.title + " (" + movie.genre + ", " + str(movie.duration) + " mins, Rating: " + str(movie.rating) + ")")
+
+        elif choice == "2":
+            print()
+            title = input("Enter movie title to search: ")
+            results = system.search_movies(title)
+            if results:
+                print("Movies Found: ")
+                for movie in results:
+                    print("* " + movie.title)
+            else:
+                print("No movie found.")
+
+        elif choice == "3":
+            print()
+            for show_id, show in system.shows.items():
+                print(show_id + ": " + show.movie.title + " at " + show.time + " in " + show.screen.screen_id)
+
+        elif choice == "4":
+            print()
+            title = input("Enter movie title: ")
+            results = system.list_showtimes(title)
+            if results:
+                print("Show times for " + title)
+                for show in results:
+                    print(show.show_id + ": " + show.movie.title + " at " + show.time)
+            else:
+                print("No showtimes found.")
+
+        elif choice == "5":
+            print()
+            show_id = input("Enter show ID: ")
+            system.show_available_seats(show_id)
+
+        elif choice == "6":
+            print()
+            user = input("Enter your name: ")
+            show_id = input("Enter show ID: ")
+            seats = input("Enter seat IDs separated by commas (e.g. A1,A2): ").replace(" ", "").split(",")
+            system.book_seats(show_id, seats, user)
+
+        elif choice == "7":
+            print()
+            booking_id = input("Enter booking ID to cancel: ")
+            system.cancel_booking(booking_id)
+
+        elif choice == "0":
+            print()
+            print("Goodbye!")
+            break
+
+        else:
+            print("Invalid choice. Try again.")
 
 if __name__ == "__main__":
     main()
