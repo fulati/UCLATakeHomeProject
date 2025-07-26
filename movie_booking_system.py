@@ -1,5 +1,7 @@
 #Imports
+import uuid
 from typing import List, Set
+from datetime import datetime
 
 
 #Movie Class (title, genre, duration, rating)
@@ -42,7 +44,13 @@ class Show:
         self.booked_seats: Set[str] = set()
 
 #Booking Class (user, show, seats)
-
+class Booking: 
+    def __init__(self, user: str, show: Show, seats: List[str]):
+        self.booking_id = str(uuid.uuid4()) #creates a random ID
+        self.user = user
+        self.show = show
+        self.seats = seats
+        self.timeStamp = datetime.now()
 
 #MovieBookingSystem Class with (movies, theaters, shows, bookings)
 
