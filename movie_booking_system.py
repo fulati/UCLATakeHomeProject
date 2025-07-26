@@ -71,6 +71,27 @@ class MovieBookingSystem:
     #Add shows
     def add_show(self, show: Show) -> None:
         self.shows[show.show_id] = show
+        
+    #show_available_seats function
+    def show_available_seats(self, show_id: str) -> None:
+        show = self.shows.get(show_id)
+        
+        #Check if valid show_id
+        if not show:
+            print("Show not found.")
+            return 
+        
+        theater = show.screen.theater
+        print("Available seats for " + show.movie.title + " at " + show.time + " in " + theater.name + " (" + theater.location + "): ")
+        
+        for row in show.screen.seats: 
+            row_seats = []
+            for seat in row:
+                if seat in show.booked_seats: 
+                    row_seats.append("[X]")
+                else: 
+                    row_seats.append(seat)
+            print(" ".join(row_seats))
 
     #search_movies function
     def search_movies(self, query: str) -> List[Movie]: 
@@ -126,7 +147,7 @@ class MovieBookingSystem:
                 
         #Check if seat already booked       
         if already_booked: 
-            print("Seats already been booked: " + ", ".join(already_booked))
+            print("Seats already booked: " + ", ".join(already_booked))
             return False
         
         #Purchase the seats
