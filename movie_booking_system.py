@@ -18,7 +18,19 @@ class Theater:
         self.screens: List[Screen] = []
 
 #Screen Class (screen_id, theater, rows, seats_per_row)
-
+class Screen:
+    def __init__(self, screen_id: str, theater: Theater, rows: int = 10, seats_per_row: int = 10):
+        self.screen_id = screen_id
+        self.theater = theater
+        self.seats = []
+        
+        #Create 10 x 10 seats selection from "A1" to "J10".
+        for r in range(rows):
+            row_list = []
+            row_char = chr(65 + r) #row 'A' to 'J'
+            for seat_num in range(1, seats_per_row + 1): # seats 1 - 10
+                row_list.append(row_char + str(seat_num))
+            self.seats.append(row_list)
 
 #Show Class (show_id, movie, screen, time)
 
