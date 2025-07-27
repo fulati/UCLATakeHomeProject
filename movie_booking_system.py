@@ -71,17 +71,11 @@ class MovieBookingSystem:
         if not show:
             print("Show not found.")
             return False
-        
-        #Store all seat ID in a list
-        all_seats = []
-        for row in show.screen.seats:
-            for seat in row:
-                all_seats.append(seat)
 
         #Store invalid seats
         invalid = []
         for seat in seats: 
-            if seat not in all_seats: 
+            if seat not in show.screen.seat_ids: 
                 invalid.append(seat)  
                 
         #Check if valid seat ID
