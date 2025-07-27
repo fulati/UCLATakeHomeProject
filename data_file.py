@@ -1,7 +1,7 @@
 from classes import Movie, Theater, Screen, Show
 from datetime import datetime
 
-#Movies
+# Movies
 def get_movies():
     return [
         Movie("Inception", "Sci-Fi", 148, 8.8),
@@ -17,7 +17,7 @@ def get_movies():
         Movie("La La Land", "Romance", 128, 8.0),
     ]
 
-#Theaters
+# Theaters
 def get_theaters():
     locations = [
         ("AMC The Grove 14", "Los Angeles, CA"),
@@ -38,7 +38,7 @@ def get_theaters():
     
     return theaters
 
-#Shows
+# Shows
 def get_shows(movies, theaters):
     return [
         Show("show1", movies[0], theaters[0], theaters[0].screens[0], datetime(2025, 7, 27, 16, 0)),   # July 27, 2025, 4:00 PM
