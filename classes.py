@@ -18,26 +18,29 @@ class Theater:
         self.location = location
         self.screens: List[Screen] = []
 
-#Screen Class (screen_id, theater, rows, seats_per_row)
+#Screen Class (screen_id, rows, seats_per_row)
 class Screen:
-    def __init__(self, screen_id: str, theater: Theater, rows: int = 10, seats_per_row: int = 10):
+    def __init__(self, screen_id: str, rows: int = 10, seats_per_row: int = 10):
         self.screen_id = screen_id
-        self.theater = theater
         self.seats = []
+        self.seat_ids = set()
         
         #Create 10 x 10 seats selection from "A1" to "J10".
         for r in range(rows):
             row_list = []
             row_char = chr(65 + r) #row 'A' to 'J'
             for seat_num in range(1, seats_per_row + 1): # seats 1 - 10
-                row_list.append(row_char + str(seat_num))
+                seat_id = row_char + str(seat_num)
+                row_list.append(seat_id)
+                self.seat_ids.add(seat_id)
             self.seats.append(row_list)
 
 #Show Class (show_id, movie, screen, time)
 class Show:
-    def __init__(self, show_id: str, movie: Movie, screen: Screen, time: str):
+    def __init__(self, show_id: str, movie: Movie, theater: Theater, screen: Screen, time: datetime):
         self.show_id = show_id
         self.movie = movie
+        self.theater = theater
         self.screen = screen
         self.time = time
         self.booked_seats: Set[str] = set()
