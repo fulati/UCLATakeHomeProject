@@ -135,10 +135,9 @@ class MovieBookingSystem:
         # Remove the booking from the user's booking dictionary
         user_key = booking.user.lower()
         if user_key in self.user_bookings: 
-            # Remove the cancelled booking
-            for booked in self.user_bookings[user_key][:]: 
-                if booked.booking_id == booking_id: 
-                    self.user_bookings[user_key].remove(booked)
+            if booking in self.user_bookings[user_key]:
+                # Remove the cancelled booking
+                self.user_bookings[user_key].remove(booking)
             
             # Remove the user if they don't have anymore bookings
             if not self.user_bookings[user_key]: 
@@ -197,7 +196,6 @@ def main():
         print("8. Show all bookings by user")
         print("0. Exit")
         print()
-
 
         choice = input("Select an option: ")
         

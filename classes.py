@@ -24,10 +24,10 @@ class Screen:
         self.seats = []
         self.seat_ids = set()
         
-        #Create 10 x 10 seats selection from "A1" to "J10".
+        # Create 10 x 10 seats selection from "A1" to "J10".
         for r in range(rows):
             row_list = []
-            row_char = chr(65 + r) #row 'A' to 'J'
+            row_char = chr(65 + r) # row 'A' to 'J'
             for seat_num in range(1, seats_per_row + 1): # seats 1 - 10
                 seat_id = row_char + str(seat_num)
                 row_list.append(seat_id)
@@ -47,8 +47,8 @@ class Show:
 # Booking Class (user, show, seats)
 class Booking: 
     def __init__(self, user: str, show: Show, seats: List[str]):
-        self.booking_id = str(uuid.uuid4()) #creates a random ID
+        self.booking_id = str(uuid.uuid4()) # creates a random ID
         self.user = user
         self.show = show
         self.seats = seats
-        self.timeStamp = datetime.now()
+        self.timestamp = datetime.now()
