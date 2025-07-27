@@ -41,8 +41,8 @@ def get_theaters():
 # Shows
 def get_shows(movies, theaters):
     return [
-        Show("show1", movies[0], theaters[0], theaters[0].screens[0], datetime(2025, 7, 27, 16, 0)),   # July 27, 2025, 4:00 PM
-        Show("show2", movies[1], theaters[0], theaters[0].screens[1], datetime(2025, 7, 29, 18, 0)),   # July 29, 2025, 6:00 PM
+        Show("show1", movies[0], theaters[0], theaters[0].screens[0], datetime(2025, 8, 2, 16, 0)),    # Aug 2, 2025, 4:00 PM
+        Show("show2", movies[1], theaters[0], theaters[0].screens[1], datetime(2025, 8, 4, 18, 0)),    # Aug 4, 2025, 6:00 PM
         Show("show3", movies[2], theaters[1], theaters[1].screens[0], datetime(2025, 8, 1, 17, 0)),    # Aug 1, 2025, 5:00 PM
         Show("show4", movies[3], theaters[1], theaters[1].screens[2], datetime(2025, 8, 3, 19, 30)),   # Aug 3, 2025, 7:30 PM
         Show("show5", movies[4], theaters[2], theaters[2].screens[1], datetime(2025, 8, 5, 21, 0)),    # Aug 5, 2025, 9:00 PM
