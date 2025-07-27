@@ -33,6 +33,19 @@ class TestMovieBookingSystem(unittest.TestCase):
         # Book A1 again
         result = self.system.book_seats("show1", ["A1"], user="guest")
         self.assertFalse(result)
+        
+    def test_cancel_booking(self):
+        self.system.book_seats("show1", ["A3"], user="fulati")
+        self.assertIn("fulati", self.system.user_bookings)
+        # Get user booking and see if cancelled
+        user_bookings = self.system.user_bookings["fulati"]
+        booking_id = user_bookings[0].booking_id
+        self.system.cancel_booking(booking_id)
+        # Check if seat is removed
+        self.assertNotIn("A3", self.show.booked_seats)
+        # Check if user is removed since no more bookings
+        self.assertNotIn("fulati", self.system.user_bookings)
+        
     
 if __name__ == '__main__': 
     unittest.main()
