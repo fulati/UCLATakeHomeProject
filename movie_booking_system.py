@@ -31,7 +31,7 @@ class MovieBookingSystem:
             print("Show not found.")
             return 
         
-        theater = show.screen.theater
+        theater = show.theater
         print("Available seats for " + show.movie.title + " at " + show.time + " in " + theater.name + " (" + theater.location + "): ")
         
         for row in show.screen.seats: 
@@ -193,7 +193,7 @@ def main():
             if results:
                 print("Show times for " + title)
                 for show in results:
-                    print(show.show_id + ": " + show.movie.title + " at " + show.time)
+                    print(show.show_id + ": " + show.movie.title + " at " + show.time + " in " + show.screen.screen_id)
             else:
                 print("No showtimes found.")
 
@@ -229,7 +229,7 @@ def main():
                     print("* Booking ID: " + booking.booking_id)
                     print("  Show: " + booking.show.movie.title + " at " + booking.show.time)
                     print("  Seats: " + ", ".join(booking.seats))
-                    print("  Theater: " + booking.show.screen.theater.name)
+                    print("  Theater: " + booking.show.theater.name)
                     print()
             if not found: 
                 print("No bookings found for " + name + ".")
