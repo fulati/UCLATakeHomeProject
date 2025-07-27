@@ -11,11 +11,18 @@ class TestMovieBookingSystem(unittest.TestCase):
         
         self.theater = Theater("AMC The Grove 14", "Los Angeles, CA")
         screen = Screen("screen1")
-        self.theater.screen.append(screen)
+        self.theater.screens.append(screen)
         self.system.add_theater(self.theater)
         
         self.show = Show("show1", self.movie, self.theater, screen, datetime(2025, 8, 2, 16, 0))  
         self.system.add_show(self.show)
         
+    def test_movie_search_success(self):
+        results = self.system.search_movies("incepTion")
+        self.assertTrue(self.movie in results)
+        
     
+    
+if __name__ == '__main__': 
+    unittest.main()
         
