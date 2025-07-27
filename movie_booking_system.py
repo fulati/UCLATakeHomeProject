@@ -76,11 +76,17 @@ class MovieBookingSystem:
             print("Show not found.")
             return False
 
+        # Store the correct standardized seat names
+        standardized_seats_list = []
+        
         # Store invalid seats
         invalid = []
         for seat in seats: 
-            if seat not in show.screen.seat_ids: 
+            standard_seat = standardize_seats(seat)
+            if standard_seat not in show.screen.seat_ids: 
                 invalid.append(seat) 
+            else: 
+                standardized_seats_list.append(standard_seat)
                 
         # Check if valid seat ID
         if invalid:
@@ -89,7 +95,7 @@ class MovieBookingSystem:
 
         # Store already booked seats
         already_booked = []
-        for seat in seats:
+        for seat in standardized_seats_list:
             if seat in show.booked_seats: 
                 already_booked.append(seat)
                 
@@ -99,11 +105,11 @@ class MovieBookingSystem:
             return False
         
         # Purchase the seats
-        for seat in seats: 
+        for seat in standardized_seats_list: 
             show.booked_seats.add(seat)
         
         # Add the booking to the bookings dictionary
-        booking = Booking(user, show, seats)
+        booking = Booking(user, show, standardized_seats_list)
         self.bookings[booking.booking_id] = booking
 
         # Add the booking to the user's dictionary
@@ -112,7 +118,7 @@ class MovieBookingSystem:
             self.user_bookings[user_key] = []
         self.user_bookings[user_key].append(booking)        
 
-        print("Successfully booked seats: " + str(seats))
+        print("Successfully booked seats: " + str(standardized_seats_list))
         print("Your Booking ID is: " + booking.booking_id)
         return True
 
@@ -160,6 +166,24 @@ class MovieBookingSystem:
                 print()
         else: 
             print("No bookings found for " + name + ".")
+
+
+# Function to get "a01", "j1", "B10" working for user entered seats
+def standardize_seats(seat: str) -> str:
+    seat = seat.strip()
+    seat = seat.upper()
+    row = ''
+    num = ''
+    
+    # Loop through the input value to get the letter and number
+    for char in seat: 
+        if char.isalpha(): 
+            row += char
+        elif char.isdigit(): 
+            num += char
+    if num:
+        num = str(int(num))  #A09 -> A9
+    return row + num
 
 
 # Main
@@ -239,6 +263,9 @@ def main():
         elif choice == "5":
             print()
             show_id = input("Enter show ID: ")
+            if not show_id: 
+                print("Show id cannot be empty.")
+                continue
             system.show_available_seats(show_id)
 
         # Book seats
@@ -249,8 +276,11 @@ def main():
                 print("Name cannot be empty.")
                 continue
             show_id = input("Enter show ID: ")
+            if not show_id: 
+                print("Show id cannot be empty.")
+                continue
             seats = input("Enter seat IDs separated by commas (e.g. A1,A2): ").replace(" ", "").split(",")
-            booked = system.book_seats(show_id, seats, user)
+            booked = system.book_seats(show_id.lower(), seats, user)
             if not booked: 
                 print("Booking failed.")
 
@@ -258,12 +288,18 @@ def main():
         elif choice == "7":
             print()
             booking_id = input("Enter booking ID to cancel: ")
+            if not booking_id: 
+                print("Booking id cannot be empty.")
+                continue
             system.cancel_booking(booking_id)
             
         # Show all bookings by user
         elif choice == "8":
             print()
             name = input("Enter your name: ").strip()
+            if not name: 
+                print("Name cannot be empty.")
+                continue
             system.show_user_bookings(name)
 
         # Exit
