@@ -239,6 +239,9 @@ def main():
         elif choice == "5":
             print()
             show_id = input("Enter show ID: ")
+            if not show_id: 
+                print("Show id cannot be empty.")
+                continue
             system.show_available_seats(show_id)
 
         # Book seats
@@ -249,6 +252,9 @@ def main():
                 print("Name cannot be empty.")
                 continue
             show_id = input("Enter show ID: ")
+            if not show_id: 
+                print("Show id cannot be empty.")
+                continue
             seats = input("Enter seat IDs separated by commas (e.g. A1,A2): ").replace(" ", "").split(",")
             booked = system.book_seats(show_id, seats, user)
             if not booked: 
@@ -258,12 +264,18 @@ def main():
         elif choice == "7":
             print()
             booking_id = input("Enter booking ID to cancel: ")
+            if not booking_id: 
+                print("Booking id cannot be empty.")
+                continue
             system.cancel_booking(booking_id)
             
         # Show all bookings by user
         elif choice == "8":
             print()
             name = input("Enter your name: ").strip()
+            if not name: 
+                print("Name cannot be empty.")
+                continue
             system.show_user_bookings(name)
 
         # Exit
