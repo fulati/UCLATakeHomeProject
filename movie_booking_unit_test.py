@@ -16,11 +16,13 @@ class TestMovieBookingSystem(unittest.TestCase):
         
         self.show = Show("show1", self.movie, self.theater, screen, datetime(2025, 8, 2, 16, 0))  
         self.system.add_show(self.show)
-        
+    
+    # Check if movie search function is working
     def test_movie_search_success(self):
         results = self.system.search_movies("incepTion")
         self.assertTrue(self.movie in results)
         
+    # Check if seat booking function is working
     def test_seat_booking_success(self):
         result = self.system.book_seats("show1", ["A1", "A2"], user="fulati")
         self.assertTrue(result)
@@ -28,12 +30,14 @@ class TestMovieBookingSystem(unittest.TestCase):
         self.assertIn("A1", self.show.booked_seats)
         self.assertIn("A2", self.show.booked_seats)
     
+    # Check if seat booking function is working for double booking
     def test_seat_booking_double_booking(self):
         self.system.book_seats("show1", ["A1"], user="fulati")
         # Book A1 again
         result = self.system.book_seats("show1", ["A1"], user="guest")
         self.assertFalse(result)
         
+    # Check if cancle booking function is working
     def test_cancel_booking(self):
         self.system.book_seats("show1", ["A3"], user="fulati")
         self.assertIn("fulati", self.system.user_bookings)
@@ -46,6 +50,10 @@ class TestMovieBookingSystem(unittest.TestCase):
         # Check if user is removed since no more bookings
         self.assertNotIn("fulati", self.system.user_bookings)
         
+    # Check if invalid seat booking is working
+    def test_invalid_seat(self):
+        result = self.system.book_seats("show1", ["Z1"], user="fulati")
+        self.assertFalse(result)
     
 if __name__ == '__main__': 
     unittest.main()
