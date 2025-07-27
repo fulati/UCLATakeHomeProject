@@ -32,7 +32,7 @@ class MovieBookingSystem:
             return 
         
         theater = show.theater
-        print("Available seats for " + show.movie.title + " at " + show.time + " in " + theater.name + " (" + theater.location + "): ")
+        print("Available seats for " + show.movie.title + " at " + show.time.strftime("%b %d, %Y, %I:%M %p") + " in " + theater.name + " (" + theater.location + "): ")
         
         for row in show.screen.seats: 
             row_seats = []
@@ -76,7 +76,7 @@ class MovieBookingSystem:
         invalid = []
         for seat in seats: 
             if seat not in show.screen.seat_ids: 
-                invalid.append(seat)  
+                invalid.append(seat) 
                 
         #Check if valid seat ID
         if invalid:
@@ -178,7 +178,7 @@ def main():
         elif choice == "3":
             print()
             for show_id, show in system.shows.items():
-                print(show_id + ": " + show.movie.title + " at " + show.time + " in " + show.screen.screen_id)
+                print(show_id + ": " + show.movie.title + " at " + show.time.strftime("%b %d, %Y, %I:%M %p") + " in " + show.screen.screen_id)
 
         elif choice == "4":
             print()
@@ -187,7 +187,7 @@ def main():
             if results:
                 print("Show times for " + title)
                 for show in results:
-                    print(show.show_id + ": " + show.movie.title + " at " + show.time + " in " + show.screen.screen_id)
+                    print(show.show_id + ": " + show.movie.title + " at " + show.time.strftime("%b %d, %Y, %I:%M %p") + " in " + show.screen.screen_id)
             else:
                 print("No showtimes found.")
 
@@ -221,7 +221,7 @@ def main():
                 if booking.user.lower() == name.lower():
                     found = True
                     print("* Booking ID: " + booking.booking_id)
-                    print("  Show: " + booking.show.movie.title + " at " + booking.show.time)
+                    print("  Show: " + booking.show.movie.title + " at " + booking.show.time.strftime("%b %d, %Y, %I:%M %p"))
                     print("  Seats: " + ", ".join(booking.seats))
                     print("  Theater: " + booking.show.theater.name)
                     print()

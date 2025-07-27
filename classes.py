@@ -37,7 +37,7 @@ class Screen:
 
 #Show Class (show_id, movie, screen, time)
 class Show:
-    def __init__(self, show_id: str, movie: Movie, theater: Theater, screen: Screen, time: str):
+    def __init__(self, show_id: str, movie: Movie, theater: Theater, screen: Screen, time: datetime):
         self.show_id = show_id
         self.movie = movie
         self.theater = theater
